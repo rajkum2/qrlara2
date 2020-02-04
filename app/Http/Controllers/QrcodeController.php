@@ -9,6 +9,10 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use QRCode;
+use Auth;
+use App\Models\Qrcode as QrcodeModel;
+
 
 class QrcodeController extends AppBaseController
 {
@@ -56,11 +60,37 @@ class QrcodeController extends AppBaseController
     {
         $input = $request->all();
 
-        $qrcode = $this->qrcodeRepository->create($input);
+        //save data to the database
+            $qrcode = $this->qrcodeRepository->create($input);
 
-        Flash::success('Qrcode saved successfully.');
 
-        return redirect(route('qrcodes.index'));
+            //generate qrcode
+            //save qrcode image in our folder on this site
+            $file = 'generated_qrcodes/'.$qrcode->id.'.png'; 
+            $newQrcode = QRCode::text(route('qrcodes.show', $qrcode->id))
+            ->setSize(8)
+            ->setMargin(2)
+            ->setOutfile($file)
+            ->png();
+            
+            if($newQrcode){
+
+            $input['qrcode_path']= $file;
+            //update database
+            $newQrcode = QrcodeModel::where('id', $qrcode->id)
+            ->update([
+                'qrcode_path' => $input['qrcode_path']
+            ]);
+            //save data to database
+            $qrcode = $this->qrcodeRepository->create($input);
+            Flash::success('Qrcode saved successfully.');
+            }else{
+
+            Flash::error('Qrcode failed to save successfully.');
+            }
+            
+
+            return redirect(route('qrcodes.show', ['qrcode' => $qrcode]));
     }
 
     /**

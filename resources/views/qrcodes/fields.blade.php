@@ -1,8 +1,8 @@
 <!-- User Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
-</div>
+<!-- <div class="form-group col-sm-6"> -->
+    <!-- {!! Form::label('user_id', 'User Id:') !!} -->
+    {!! Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control']) !!}
+<!-- </div> -->
 
 <!-- Website Field -->
 <div class="form-group col-sm-6">
@@ -35,10 +35,10 @@
 </div>
 
 <!-- Qrcode Path Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('qrcode_path', 'Qrcode Path:') !!}
-    {!! Form::number('qrcode_path', null, ['class' => 'form-control']) !!}
-</div>
+<!-- <div class="form-group col-sm-6"> -->
+    <!-- {!! Form::label('qrcode_path', 'Qrcode Path:') !!} -->
+    <!-- {!! Form::number('qrcode_path', null, ['class' => 'form-control']) !!} -->
+<!-- </div>  -->
 
 <!-- Amount Field -->
 <div class="form-group col-sm-6">
