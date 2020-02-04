@@ -27,3 +27,5 @@ Route::get('/home', 'HomeController@index')->middleware('verified');
 Route::resource('qrcodes', 'QrcodeController');
 
 Route::resource('transactions', 'TransactionsController');
+
+Route::resource('users', 'UserController');
